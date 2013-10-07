@@ -38,6 +38,45 @@ Parameters(size -> 1230000): 362.468
 Parameters(size -> 1530000): 419.529
 ```
 
+### Explanation
+
+The algorithmic complexity of both algorithms is the same.
+
+So let's have a closer look at the memory layout:
+
+#### structure binary search tree
+(number indicates position of this node in the array):
+
+```
+        7
+   6        8
+ 1   4   10   13
+0 2 3 5 9 11 12 14
+```
+(note that this array is sorted)
+
+
+#### structure nearly complete tree
+(number indicates position of the node in the array, with formula left=2k+1, right=2k+2):
+
+```
+        0
+   1          2
+ 3   4     5    6
+7 8 9 10 11 12 13 14
+```
+
+Why is the nearly complete tree faster?
+
+On average all paths are touched equally often. The difference is in the locality of accesses:
+
+- binary search does big jumps at the beginning, then small jumps
+- the nearly complete tree does small jumps first, then the big jumps follow
+
+Small jumps are more cache efficient (more local accesses, thus data is already in cache).
+
+Since the upper part of the search trees is searched more often (common to many paths), the second algorithm is faster.
+
 ### Howto Run
 
 1. Install [SBT](http://www.scala-sbt.org/), put the launcher script in your path
